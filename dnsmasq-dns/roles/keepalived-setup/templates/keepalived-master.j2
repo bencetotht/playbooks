@@ -1,0 +1,16 @@
+vrrp_instance VI_1 {
+  state MASTER
+  interface {{ vip_interface }}
+  virtual_router_id 55
+  priority 150
+  advert_int 1
+
+  authentication {
+    auth_type PASS
+    auth_pass {{ keepalived_auth_pass }}
+  }
+
+  virtual_ipaddress {
+    {{ vip }}/24
+  }
+}

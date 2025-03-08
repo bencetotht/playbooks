@@ -1,0 +1,4 @@
+vip: 192.168.88.60
+vip_interface: eth0
+
+keepalived_auth_pass: C3P9K9gc

@@ -1,0 +1,12 @@
+- name: Configure dnsmasq
+  ansible.builtin.template:
+    src: ./templates/dnsmasq.conf.j2
+    dest: /etc/dnsmasq.d/dnsmasq.conf
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Restart dnsmasq
+  ansible.builtin.service:
+    name: dnsmasq
+    state: restarted

@@ -1,0 +1,17 @@
+- name: Prepare the environment / install dependencies
+  hosts: dns
+  become: yes
+  roles:
+    - role: install-deps
+
+- name: Configure dnsmasq
+  hosts: dns
+  become: yes
+  roles:
+    - role: configure-dnsmasq
+
+- name: Configure keepalived
+  hosts: dns
+  become: yes
+  roles:
+    - role: keepalived-setup
