@@ -1,0 +1,18 @@
+token: {{ rke2_token }}
+write-kubeconfig-mode: "0644"
+tls-san:
+  - {{ vip }}
+{% for server in groups['servers'] %}
+  - {{ hostvars[server]['ansible_host'] }}
+  - {{ hostvars[server]['inventory_hostname'] }}
+{% endfor %}
+node-label:
+  - server=true
+disable:
+  - rke2-ingress-nginx
+kubelet-arg:
+  - "max-pods=150"
+  - "enforce-node-allocatable=pods"
+  - "system-reserved=cpu=300m,memory=5Mi,ephemeral-storage=1Gi"
+  - "kube-reserved=cpu=200m,memory=5Mi,ephemeral-storage=1Gi"
+  - "eviction-hard=memory.available<1Gi,nodefs.available<10%"

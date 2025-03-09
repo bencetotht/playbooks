@@ -1,6 +1,12 @@
 # DNSMASQ setup using Ansible
 Automated setup of DNS server dnsmasq. The dns entries are in the `roles/configure-dnsmasq/templates/dnsmasq.conf.j2` file. 
 
+## Playbook
+The playbook follows the following instructions:
+- update systems and install dnsmasq to `dns` hosts
+- configure dnsmasq / copy the configuation file over to each host
+- setup keepalived / setup a virtual IP address for fault tolerance
+
 ## Running the plabook
 - Configure the hosts in `inventory/hosts.ini`
 - Configure the variables in `inventory/group_vars/all.yaml`

@@ -1,0 +1,37 @@
+- name: Prepare loadbalancers
+  hosts: loadbalancers
+  gather_facts: false
+  become: true
+  roles:
+    - setup-loadbalancers
+
+- name: Prepare all nodes
+  hosts: servers,agents
+  gather_facts: false
+  become: true
+  roles:
+    - prepare-nodes
+
+- name: Configure RKE2 on Servers and Agents
+  hosts: servers,agents
+  gather_facts: true
+  roles:
+    - rke2-configure
+
+- name: Install cluster manifests
+  hosts: servers
+  gather_facts: true
+  roles:
+    - install-manifests
+
+- name: Deploy RKE2
+  hosts: servers,agents
+  gather_facts: true
+  roles:
+    - rke2-install
+
+- name: Run RKE2
+  hosts: servers,agents
+  gather_facts: true
+  roles:
+    - rke2-run
