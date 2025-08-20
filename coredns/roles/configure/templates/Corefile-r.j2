@@ -1,0 +1,14 @@
+{{ coredns_zone }} {
+  auto /etc/coredns/zones {
+    reload 15s
+    transfer to *
+  }
+  log
+  errors
+}
+
+.:53 {
+  forward . 1.1.1.1 8.8.8.8
+  log
+  errors
+}

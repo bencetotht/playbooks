@@ -1,0 +1,11 @@
+- name: Prepare the environment / install dependencies
+  hosts: dns
+  become: yes
+  roles:
+    - role: install-deps
+
+- name: Configure CoreDNS
+  hosts: dns
+  become: yes
+  roles:
+    - role: configure-coredns

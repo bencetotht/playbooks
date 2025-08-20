@@ -1,0 +1,31 @@
+- name: Update system
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Download CoreDNS binary
+  ansible.builtin.get_url:
+    url: https://github.com/coredns/coredns/releases/download/v1.12.2/coredns_1.12.2_linux_amd64.tgz
+    dest: /tmp/coredns_amd64.tgz
+    mode: '0644'
+
+- name: Extract CoreDNS archive
+  ansible.builtin.unarchive:
+    src: /tmp/coredns_amd64.tgz
+    dest: /tmp
+    remote_src: yes
+
+- name: Move CoreDNS binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: /tmp/coredns
+    dest: /usr/local/bin/coredns
+    mode: '0755'
+    remote_src: yes
+
+- name: Check CoreDNS version
+  ansible.builtin.command: coredns -version
+  register: coredns_version
+  changed_when: false
+
+- name: Display CoreDNS version
+  ansible.builtin.debug:
+    var: coredns_version.stdout

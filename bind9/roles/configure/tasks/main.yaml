@@ -1,0 +1,47 @@
+- name: Ensure Bind9 zones directory exists
+  file:
+    path: /etc/bind/zones/
+    state: directory
+    mode: '0755'
+
+- name: Ensure Bind9 logs directory exists
+  file:
+    path: /var/log/named/
+    state: directory
+    mode: '0755'
+
+- name: Create zone file from template
+  template:
+    src: zone.example.db.j2
+    dest: /etc/bind/zones/{{ dns_zone }}.db
+    mode: '0644'
+
+- name: Create named.conf from template
+  template:
+    src: named.conf.j2
+    dest: /etc/bind/named.conf
+    mode: '0644'
+
+- name: Create named.conf.local from template
+  template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+    mode: '0644'
+
+- name: Set ownership of zones directory
+  ansible.builtin.file:
+    path: /etc/bind/zones
+    owner: bind
+    group: bind
+    recurse: true
+
+- name: Set permissions on terraform key file
+  ansible.builtin.file:
+    path: /etc/bind/terraform-key.key
+    mode: '0640'
+
+- name: Restart Bind9 service
+  ansible.builtin.systemd:
+    name: bind9
+    state: restarted
+    enabled: true

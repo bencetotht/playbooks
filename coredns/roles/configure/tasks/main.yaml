@@ -1,0 +1,36 @@
+- name: Ensure CoreDNS config directory exists
+  file:
+    path: /etc/coredns
+    state: directory
+    mode: '0755'
+
+- name: Create CoreDNS Corefile from template
+  template:
+    src: Corefile.j2
+    dest: /etc/coredns/Corefile
+    mode: '0644'
+
+- name: Create CoreDNS zone directory
+  file:
+    path: /etc/coredns/zones
+    state: directory
+    mode: '0755'
+
+- name: Create CoreDNS zone file from template
+  template:
+    src: zone.example.db.j2
+    dest: /etc/coredns/zones/{{ coredns_zone }}.db
+    mode: '0644'
+
+- name: Create CoreDNS systemd service file from template
+  template:
+    src: coredns.service.j2
+    dest: /etc/systemd/system/coredns.service
+    mode: '0644'
+
+- name: Enable CoreDNS service
+  ansible.builtin.systemd:
+    name: coredns
+    enabled: yes
+    state: started
+    daemon_reload: yes

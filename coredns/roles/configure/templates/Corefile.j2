@@ -1,0 +1,12 @@
+{{ coredns_zone }} {
+  file /etc/coredns/zones/{{ coredns_zone }}.db
+  reload
+  log
+  errors
+}
+
+.:53 {
+  forward . 1.1.1.1 8.8.8.8
+  log
+  errors
+}

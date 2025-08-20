@@ -1,0 +1,2 @@
+coredns_zone: local.bnbdevelopment.hu
+RFC2136_enabled: true
