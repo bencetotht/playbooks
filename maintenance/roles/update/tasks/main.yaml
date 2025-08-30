@@ -1,0 +1,17 @@
+- name: Update system packages
+  ansible.builtin.apt:
+    update_cache: true
+    state: present
+  when: apt.update
+
+- name: Upgrade system packages
+  ansible.builtin.apt:
+    update_cache: true
+    state: latest
+  when: apt.upgrade
+
+- name: Clean up unused packages
+  ansible.builtin.apt:
+    autoremove: true
+    autoclean: true
+  when: apt.autoclean

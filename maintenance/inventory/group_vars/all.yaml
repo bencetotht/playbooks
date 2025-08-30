@@ -1,0 +1,8 @@
+apt:
+  enabled: true
+  update: true
+  upgrade: true
+  autoclean: true
+
+cloudflared:
+  enabled: true

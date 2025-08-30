@@ -1,0 +1,13 @@
+- name: Update packages
+  hosts: all
+  become: yes
+  roles:
+    - role: update
+  when: apt.enabled
+
+- name: Update cloudflared
+  hosts: cloudflared
+  become: yes
+  roles:
+    - role: cloudflared
+  when: cloudflared.enabled
