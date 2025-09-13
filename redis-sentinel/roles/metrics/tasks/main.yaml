@@ -1,0 +1,37 @@
+# - name: Get install script
+#   get_url:
+#     url: https://raw.githubusercontent.com/bencetotht/k8s/refs/heads/main/scripts/docker/docker-install-debian.sh
+#     dest: /tmp/docker-install-debian.sh
+#     mode: '0755'
+
+# - name: Install docker
+#   shell:
+#     cmd: /tmp/docker-install-debian.sh
+#     creates: /usr/bin/docker
+
+# - name: Add docker group
+#   ansible.builtin.group:
+#     name: docker
+#     system: yes
+
+- name: Install podman
+  ansible.builtin.apt:
+    pkg:
+      - podman
+      - podman-compose
+
+- name: Create directories
+  ansible.builtin.file:
+    path: "~/metrics"
+    state: directory
+    mode: '0755'
+
+- name: Create docker compose file
+  ansible.builtin.template:
+    src: compose.yaml.j2
+    dest: ~/metrics/compose.yaml
+    mode: '0644'
+
+- name: Run docker compose
+  ansible.builtin.shell:
+    cmd: podman-compose -f ~/metrics/compose.yaml up -d

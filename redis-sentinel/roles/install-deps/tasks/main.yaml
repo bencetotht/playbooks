@@ -1,0 +1,8 @@
+- name: Update system
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Download redis server
+  ansible.builtin.apt:
+    pkg:
+      - redis-server

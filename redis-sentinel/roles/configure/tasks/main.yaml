@@ -1,0 +1,55 @@
+- name: Backup Redis configuration file
+  ansible.builtin.copy:
+    src: /etc/redis/redis.conf
+    dest: /etc/redis/redis.conf.bak
+    remote_src: yes
+    force: no
+
+# Change bind on all nodes
+- name: Configure Redis to bind to all interfaces
+  ansible.builtin.lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: '^bind '
+    line: 'bind 0.0.0.0'
+
+- name: Setup password authentication on master node
+  ansible.builtin.lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: '^# requirepass '
+    line: 'requirepass {{ redis_password }}'
+  when: inventory_hostname == 'redis1'
+
+# Only restart master node
+- name: Restart Redis service
+  ansible.builtin.service:
+    name: redis-server
+    state: restarted
+  when: inventory_hostname == 'redis1'
+
+# Replica configuration
+- name: Configure Redis to bind to all interfaces
+  ansible.builtin.lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: '^protected-mode '
+    line: 'protected-mode no'
+  when: inventory_hostname != 'redis1'
+
+- name: Configure Redis replication
+  ansible.builtin.lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: '^# replicaof '
+    line: 'replicaof {{ hostvars["redis1"]["ansible_host"] }} 6379'
+  when: inventory_hostname != 'redis1'
+
+- name: Setup password authentication on slave nodes
+  ansible.builtin.lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: '^# masterauth '
+    line: 'masterauth {{ redis_password }}'
+  when: inventory_hostname != 'redis1'
+
+- name: Restart Redis service
+  ansible.builtin.service:
+    name: redis-server
+    state: restarted
+  when: inventory_hostname != 'redis1'

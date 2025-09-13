@@ -1,0 +1,24 @@
+- name: Prepare the environment / install dependencies
+  hosts: redis
+  become: yes
+  roles:
+    - role: install-deps
+
+- name: Configure Redis
+  hosts: redis
+  become: yes
+  roles:
+    - role: configure
+
+- name: Configure Sentinel
+  hosts: redis
+  become: yes
+  roles:
+    - role: configure-sentinel
+
+- name: Setup Metrics
+  hosts: redis
+  become: yes
+  roles:
+    - role: metrics
+      when: metrics.enabled | bool

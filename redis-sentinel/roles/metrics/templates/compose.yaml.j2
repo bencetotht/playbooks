@@ -1,0 +1,19 @@
+services:
+  redis_exporter:
+    container_name: redis_exporter_{{ inventory_hostname }}
+    image: docker.io/oliver006/redis_exporter
+    ports:
+      - 9121:9121
+    environment:
+      - REDIS_ADDR=redis://{{ ansible_host }}:6379
+      {% if inventory_hostname == 'redis1' %}
+      - REDIS_PASSWORD={{ redis_password }}
+      {% endif %}
+
+  sentinel_exporter:
+    container_name: sentinel_exporter_{{ inventory_hostname }}
+    image: docker.io/oliver006/redis_exporter
+    ports:
+      - 9122:9121
+    environment:
+      - REDIS_ADDR=redis://{{ ansible_host }}:26379

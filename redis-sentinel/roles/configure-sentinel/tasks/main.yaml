@@ -1,0 +1,22 @@
+- name: Create Sentinel configuration file
+  ansible.builtin.template:
+    src: sentinel.conf.j2
+    dest: /etc/redis/sentinel.conf
+    owner: redis
+    group: redis
+    mode: '0640'
+
+- name: Create Sentinel service file
+  ansible.builtin.template:
+    src: sentinel.service
+    dest: /etc/systemd/system/redis-sentinel.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable Sentinel service
+  ansible.builtin.systemd:
+    name: redis-sentinel
+    enabled: yes
+    state: started
+    daemon_reload: yes

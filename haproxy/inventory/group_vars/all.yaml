@@ -1,0 +1,7 @@
+services:
+  kubernetes: true
+  postgres: true
+  redis: true
+  
+metrics:
+  enabled: true
