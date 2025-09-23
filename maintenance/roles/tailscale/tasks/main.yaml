@@ -1,0 +1,5 @@
+- name: Update Tailscale package
+  ansible.builtin.command:
+    cmd: tailscale update --yes
+  register: tailscale_update
+  # changed_when: "'up to date' not in tailscale_update.stdout"

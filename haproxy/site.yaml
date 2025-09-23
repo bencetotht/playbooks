@@ -1,8 +1,8 @@
-# - name: Prepare the environment / install dependencies
-#   hosts: haproxy
-#   become: yes
-#   roles:
-#     - role: install-deps
+- name: Prepare the environment / install dependencies
+  hosts: haproxy
+  become: yes
+  roles:
+    - role: install-deps
 
 - name: Configure HAProxy
   hosts: haproxy
