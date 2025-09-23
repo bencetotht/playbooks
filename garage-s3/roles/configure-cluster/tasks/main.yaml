@@ -1,0 +1,57 @@
+- name: Create Garage system user
+  ansible.builtin.user:
+    name: garage
+    system: yes
+    shell: /bin/false
+    create_home: no
+
+- name: Create Garage config directory
+  ansible.builtin.file:
+    path: /etc
+    state: directory
+    owner: root 
+    group: root
+    mode: '0755'
+
+- name: Create Garage metadata directory
+  ansible.builtin.file:
+    path: /var/lib/garage/meta
+    state: directory
+    owner: garage
+    group: garage
+    mode: '0755'
+
+- name: Create Garage data directory
+  ansible.builtin.file:
+    path: /var/lib/garage/data
+    state: directory
+    owner: garage
+    group: garage
+    mode: '0755'
+
+
+- name: Copy Garage configuration
+  ansible.builtin.template:
+    src: garage.toml.j2
+    dest: /etc/garage.toml
+    owner: garage
+    group: garage
+    mode: '0644'
+
+- name: Copy Garage service file
+  ansible.builtin.template:
+    src: garage.service.j2
+    dest: /etc/systemd/system/garage.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable and start Garage service
+  ansible.builtin.systemd:
+    name: garage
+    enabled: yes
+    state: started

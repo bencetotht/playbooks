@@ -1,0 +1,19 @@
+# - name: Prepare the environment / install dependencies
+#   hosts: s3
+#   become: yes
+#   roles:
+#     - role: install-deps
+
+- name: Configure Garage - Single
+  hosts: s3
+  become: yes
+  roles:
+    - role: configure-single
+      when: architecture == 'standalone'
+
+# - name: Configure Garage - Cluster
+#   hosts: s3
+#   become: yes
+#   roles:
+#     - role: configure-cluster
+#       when: architecture == 'cluster'

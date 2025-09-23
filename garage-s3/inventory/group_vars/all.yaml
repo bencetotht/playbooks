@@ -1,0 +1,9 @@
+architecture: standalone
+
+secrets:
+  rpc_secret: "" # Generated with: "$(openssl rand -hex 32)"
+  admin_token: "" # Generated with: "$(openssl rand -base64 32)"
+  s3_web_secret: "" # Generated with: "$(openssl rand -hex 32)"
+  metrics_token: "" # Generated with: "$(openssl rand -base64 32)"
+
+root_domain: "garage.localhost"
