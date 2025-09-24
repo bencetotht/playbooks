@@ -9,7 +9,7 @@ exclude_paths:
   - .git
   - .tox
   - __pycache__
-  - *.egg-info
+  - "*.egg-info"
   - .venv
   - venv
   - .molecule
@@ -33,11 +33,8 @@ enable_list:
   - name[template]
   - name[play]
   - risky-file-permissions
-  - risky-shell-pipe
   - no-free-form
   - no-same-owner
-  - no-tabs
-  - var-spacing
 
 # Verbosity level
 verbosity: 1
@@ -51,6 +48,12 @@ mock_modules:
 # Mock roles for testing
 mock_roles:
   - kubernetes.core
+
+# Mock collections for testing
+mock_collections:
+  - kubernetes.core
+  - community.general
+  - community.crypto
 
 # Offline mode
 offline: false
@@ -68,28 +71,7 @@ write_list: []
 use_default_rules: true
 
 # Tags to skip
-tags: []
-
-# List of tags to skip
 skip_tags: []
 
-# List of tags to run
+# Tags to run (empty means run all)
 tags: []
-
-# Mock modules
-mock_modules: []
-
-# Mock roles
-mock_roles: []
-
-# Mock collections
-mock_collections: []
-
-# Mock modules
-mock_modules: []
-
-# Mock roles
-mock_roles: []
-
-# Mock collections
-mock_collections: []
