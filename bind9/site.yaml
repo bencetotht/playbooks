@@ -8,4 +8,4 @@
   hosts: dns
   become: yes
   roles:
-    - role: configure-coredns
+    - role: configure
