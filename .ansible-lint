@@ -1,0 +1,95 @@
+---
+# Ansible Lint Configuration
+# https://ansible-lint.readthedocs.io/en/latest/configuration.html
+
+# Exclude paths
+exclude_paths:
+  - .cache
+  - .github
+  - .git
+  - .tox
+  - __pycache__
+  - *.egg-info
+  - .venv
+  - venv
+  - .molecule
+  - .pytest_cache
+
+# Skip specific rules
+skip_list:
+  - yaml[line-too-long]  # Handled by yamllint
+  - name[casing]         # Allow different naming conventions
+  - jinja[spacing]       # Allow flexible Jinja2 spacing
+  - risky-shell-pipe     # Allow shell pipes when necessary
+  - no-changed-when      # Allow tasks without changed_when
+  - command-instead-of-shell  # Allow shell when needed
+  - package-latest       # Allow specific versions
+  - no-tabs              # Allow tabs in templates
+  - var-spacing          # Allow flexible variable spacing
+
+# Enable specific rules
+enable_list:
+  - name[missing]
+  - name[template]
+  - name[play]
+  - risky-file-permissions
+  - risky-shell-pipe
+  - no-free-form
+  - no-same-owner
+  - no-tabs
+  - var-spacing
+
+# Verbosity level
+verbosity: 1
+
+# Mock modules for testing
+mock_modules:
+  - kubernetes.core
+  - community.general
+  - community.crypto
+
+# Mock roles for testing
+mock_roles:
+  - kubernetes.core
+
+# Offline mode
+offline: false
+
+# Colored output
+colored: true
+
+# Progress bar
+progress: true
+
+# Write violations to file
+write_list: []
+
+# Use default rules
+use_default_rules: true
+
+# Tags to skip
+tags: []
+
+# List of tags to skip
+skip_tags: []
+
+# List of tags to run
+tags: []
+
+# Mock modules
+mock_modules: []
+
+# Mock roles
+mock_roles: []
+
+# Mock collections
+mock_collections: []
+
+# Mock modules
+mock_modules: []
+
+# Mock roles
+mock_roles: []
+
+# Mock collections
+mock_collections: []

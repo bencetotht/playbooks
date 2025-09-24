@@ -8,11 +8,21 @@ A collection of Ansible playbooks for infrastructure automation, various Kuberne
 - **[RKE2](./rke2-ha/)**: Automated deployment of a highly available Kubernetes cluster using Rancher Kubernetes Engine 2.
 - **[K3S](./k3s-ha/)**: Automated deployment of a highly available lightweight Kubernetes cluster using K3S.
 
+### Networking Services
+- **[HAProxy](./haproxy/)**: Automated setup of HAProxy loadbalancer with the desired configuration
+
 ### DNS Services
 - **[BIND9](./bind9/)**: Automated setup of BIND9 DNS server with high availability using keepalived for fault tolerance.
 - **[CoreDNS](./coredns/)**: Automated setup of CoreDNS server with high availability using keepalived.
 - **[DNSMasq DNS](./dnsmasq-dns/)**: Lightweight DNS server setup using dnsmasq with high availability.
 
+### Storage & Queues
+- **[Redis](./redis-sentinel/)**: Automated setup of Redis with Sentinel
+- **[Garage](./garage-s3/)**: Automated setup of Garage S3 bucket storage
+- **[RabbitMQ](./rabbitmq/)**: Automated setup of RabbitMQ Queue service
+
+### Maintenance Scripts
+- **[Maintenance](./maintenance/)**: general update script for desired applications
 
 ## 🚀 Getting Started
 
@@ -52,11 +62,8 @@ Each playbook includes:
 
 ```
 playbooks/
-├── bind9/                # BIND9 DNS server automation
-├── coredns/              # CoreDNS server automation
 ├── dnsmasq-dns/          # DNSMasq DNS server automation
 ├── rke2-ha/              # RKE2 high-availability cluster
-├── k3s-ha/               # K3S high-availability cluster
 └── README.md             # This file
 ```
 
